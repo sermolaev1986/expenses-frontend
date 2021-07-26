@@ -49,3 +49,5 @@ platforms
 
 .idea
 www
+
+expenses-app/node_modules
