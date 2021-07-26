@@ -1,0 +1,25 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" (keydown.enter)="$event.preventDefault()">
+  <div class="form-group">
+    <label for="amount">Betrag</label>
+    <input type="number" class="form-control" id="amount" formControlName="amount"
+           placeholder="Betrag" (keyup.enter)="focusOnNextInput()">
+  </div>
+  <div class="form-group">
+    <label for="date">Datum</label>
+    <input class="form-control" formControlName="date" (click)="d.toggle()" id="date" type="text" ngbDatepicker
+           #d="ngbDatepicker"/>
+  </div>
+  <div class="form-group">
+    <label for="category">Kategorie</label>
+    <select #category id="category" class="form-control" formControlName="category">
+      <option>Geschenke</option>
+      <option>Auto</option>
+      <option>Lebensmittel</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-outline-primary">Speichern</button>
+</form>
+<a routerLink="/list" type="button" class="btn btn-outline-secondary margin-top">Liste</a>
+<div *ngIf="successfullySubmitted" class="alert alert-success margin-top">
+  Erfolgreich gespeichert!
+</div>
