@@ -2,6 +2,7 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {ExpensesService} from "../expenses.service";
 import {FormControl, FormGroup} from "@angular/forms";
 import {Expense} from "../Expense";
+import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'app-form',
@@ -24,11 +25,16 @@ export class FormComponent {
     date: new FormControl(''),
   });
 
+  date: Date;
+
   onSubmit() {
+    let datePickerDate = this.form.value['date'];
+    let date = new Date(datePickerDate.year,datePickerDate.month,datePickerDate.day);
+
     let expense: Expense = {
       amount: this.form.value['amount'],
       category: this.form.value['category'],
-      date: this.form.value['date']
+      date: formatDate(date, 'yyyy-MM-dd', 'en-US')
     }
 
     this.expensesService.postExpense(expense).then(expense => {
