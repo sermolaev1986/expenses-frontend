@@ -25,8 +25,6 @@ export class FormComponent {
     date: new FormControl(''),
   });
 
-  date: Date;
-
   onSubmit() {
     let datePickerDate = this.form.value['date'];
     let date = new Date(datePickerDate.year,datePickerDate.month,datePickerDate.day);
