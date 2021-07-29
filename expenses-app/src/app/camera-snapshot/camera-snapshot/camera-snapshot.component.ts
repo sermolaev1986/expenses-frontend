@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {PrefilledExpenseService} from "../../services/prefilled-expense.service";
+import {Expense} from "../../Expense";
 
 @Component({
   selector: 'app-camera-snapshot',
@@ -17,7 +18,8 @@ export class CameraSnapshotComponent implements AfterViewInit {
   error: any;
   stream: MediaStream;
 
-  constructor(private prefilledExpenseService: PrefilledExpenseService) { }
+  constructor(private prefilledExpenseService: PrefilledExpenseService) {
+  }
 
   async ngAfterViewInit() {
     await this.setupDevices();
@@ -45,9 +47,15 @@ export class CameraSnapshotComponent implements AfterViewInit {
 
   capture() {
     // TODO:
-    this.prefilledExpenseService.setExpense({ amount: 555, category: "My Favorite", date: "12.09.2021"});
+    let expense = new Expense();
+    expense.category = "My Favorite";
+    expense.amount = 555;
+    expense.date = "12.09.2021";
 
-    this.stream.getTracks().forEach((track: MediaStreamTrack) => track.stop())
+    this.prefilledExpenseService.setExpense(expense);
+    if (this.stream) {
+      this.stream.getTracks().forEach((track: MediaStreamTrack) => track.stop())
+    }
     window.location.href = '/form';
   }
 

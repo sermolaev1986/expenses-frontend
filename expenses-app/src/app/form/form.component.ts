@@ -10,12 +10,16 @@ import {PrefilledExpenseService} from "../services/prefilled-expense.service";
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.css']
 })
-export class FormComponent {
+export class FormComponent implements OnInit{
 
   @ViewChild("category")
   private categoryElement: ElementRef;
 
   public successfullySubmitted = false;
+
+  public myCategory:string;
+  public amount:number;
+  public date:string;
 
   public form = new FormGroup({
     category: new FormControl(''),
@@ -25,13 +29,23 @@ export class FormComponent {
 
   constructor(private expensesService: ExpensesService,
               private prefilledExpenseService: PrefilledExpenseService) {
-    this.prefilledExpenseService.preFilledExpense.subscribe(status => this.onExpensePrefilled(status));
+  }
+
+  ngOnInit(): void {
+    this.onExpensePrefilled(this.prefilledExpenseService.detExpense());
   }
 
   onExpensePrefilled(preFilledExpense: Expense): void {
-    this.form.value['category']=preFilledExpense.category;
-    this.form.value['amount']=preFilledExpense.amount;
-    this.form.value['date']=preFilledExpense.date;
+    this.form.controls['category'].setValue( preFilledExpense.category);
+    this.form.controls['amount'].setValue( preFilledExpense.amount);
+    this.form.controls['date'].setValue( preFilledExpense.date);
+
+    this.myCategory = preFilledExpense.category;
+    this.amount = preFilledExpense.amount;
+    this.date = preFilledExpense.date;
+    console.log("!!!!!!!!!!!!!!!!!!!!!!" + preFilledExpense.category)
+    console.log("!!!!!!!!!!!!!!!!!!!!!!" + preFilledExpense.amount)
+    console.log("!!!!!!!!!!!!!!!!!!!!!!" + preFilledExpense.date)
   }
 
   onSubmit() {

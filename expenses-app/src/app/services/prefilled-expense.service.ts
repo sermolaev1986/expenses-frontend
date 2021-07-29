@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
+import {Injectable} from '@angular/core';
 import {Expense} from "../Expense";
 
 @Injectable({
@@ -7,10 +6,13 @@ import {Expense} from "../Expense";
 })
 export class PrefilledExpenseService {
 
-  private readonly expenseSource = new BehaviorSubject<Expense>({ amount: 1, category: "Auto", date: ""});
-  preFilledExpense: Observable<Expense> = this.expenseSource.asObservable();
+  setExpense(expense: Expense): void {
+    console.log("?????? Set new Expense : " + expense.amount + "  " + expense.category)
+    window.localStorage.setItem("expense", JSON.stringify(expense));
+  }
 
-  setExpense(expense: Expense) {
-    this.expenseSource.next(expense);
+  detExpense(): Expense {
+    let expense: Expense = JSON.parse(window.localStorage.getItem("expense") || "");
+    return expense != null ? expense : new Expense();
   }
 }

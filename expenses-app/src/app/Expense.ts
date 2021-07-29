@@ -1,5 +1,5 @@
-export type Expense = {
-  amount: number,
-  category: string,
-  date: string
+export class Expense {
+  amount: number;
+  category: string;
+  date: string;
 }
