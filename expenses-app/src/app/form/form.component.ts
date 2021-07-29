@@ -1,8 +1,9 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
-import {ExpensesService} from "../expenses.service";
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ExpensesService} from "../services/expenses.service";
 import {FormControl, FormGroup} from "@angular/forms";
 import {Expense} from "../Expense";
 import {formatDate} from "@angular/common";
+import {PrefilledExpenseService} from "../services/prefilled-expense.service";
 
 @Component({
   selector: 'app-form',
@@ -16,18 +17,26 @@ export class FormComponent {
 
   public successfullySubmitted = false;
 
-  constructor(private expensesService: ExpensesService) {
-  }
-
   public form = new FormGroup({
     category: new FormControl(''),
     amount: new FormControl(''),
     date: new FormControl(''),
   });
 
+  constructor(private expensesService: ExpensesService,
+              private prefilledExpenseService: PrefilledExpenseService) {
+    this.prefilledExpenseService.preFilledExpense.subscribe(status => this.onExpensePrefilled(status));
+  }
+
+  onExpensePrefilled(preFilledExpense: Expense): void {
+    this.form.value['category']=preFilledExpense.category;
+    this.form.value['amount']=preFilledExpense.amount;
+    this.form.value['date']=preFilledExpense.date;
+  }
+
   onSubmit() {
     let datePickerDate = this.form.value['date'];
-    let date = new Date(datePickerDate.year,datePickerDate.month,datePickerDate.day);
+    let date = new Date(datePickerDate.year, datePickerDate.month, datePickerDate.day);
 
     let expense: Expense = {
       amount: this.form.value['amount'],
@@ -43,4 +52,5 @@ export class FormComponent {
   focusOnNextInput() {
     this.categoryElement.nativeElement.focus();
   }
+
 }

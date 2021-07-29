@@ -1,0 +1,17 @@
+<div>
+  <div *ngIf = "error">{{error}}</div>
+  <div class="video-container">
+    <video
+      #video
+      id="video"
+      [width]="WIDTH"
+      [height]="HEIGHT"
+      autoplay
+    ></video>
+  </div>
+  <div class="snap-container">
+    <button class="btn btn-primary" (click)="capture()">
+      Snap Photo
+    </button>
+  </div>
+</div>

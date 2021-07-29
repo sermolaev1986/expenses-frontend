@@ -8,10 +8,13 @@ import {FormComponent} from './form/form.component';
 import {ExpensesListComponent} from './expenses-list/expenses-list.component';
 import {RouterModule, Routes} from "@angular/router";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {CameraSnapshotModule} from "./camera-snapshot/camera-snapshot.module";
+import {CameraSnapshotComponent} from "./camera-snapshot/camera-snapshot/camera-snapshot.component";
 
 const routes: Routes = [
   {path: 'form', component: FormComponent},
   {path: 'list', component: ExpensesListComponent},
+  {path: 'camera', component: CameraSnapshotComponent},
   {path: '', redirectTo: '/form', pathMatch: 'full'}
 ];
 
@@ -26,7 +29,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
-    NgbModule
+    NgbModule,
+    CameraSnapshotModule
   ],
   providers: [],
   bootstrap: [AppComponent]
