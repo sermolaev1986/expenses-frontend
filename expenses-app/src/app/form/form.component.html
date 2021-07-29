@@ -1,4 +1,5 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()" (keydown.enter)="$event.preventDefault()">
+<a routerLink="/camera" type="button" class="btn btn-outline-secondary margin-top">Kamera</a>
+<form  [formGroup]="form" (ngSubmit)="onSubmit()" (keydown.enter)="$event.preventDefault()">
   <div class="form-group">
     <label for="amount">Betrag</label>
     <input type="number" class="form-control" id="amount" formControlName="amount"
